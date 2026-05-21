@@ -99,7 +99,7 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
     flex-direction: column;
     gap: 0.25rem;
     padding: 1.5rem 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--accent2-subtle);
   }
 
   .talk:first-child {
@@ -126,16 +126,16 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
 
   .links a {
     font-size: 0.8rem;
-    color: var(--accent);
+    color: var(--accent2);
     text-decoration: none;
-    border: 1px solid var(--accent);
+    border: 1px solid var(--accent2);
     padding: 0.15rem 0.65rem;
     border-radius: 2px;
     transition: background 0.15s, color 0.15s;
   }
 
   .links a:hover {
-    background: var(--accent);
+    background: var(--accent2);
     color: var(--bg);
   }
 </style>
