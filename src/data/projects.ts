@@ -11,7 +11,7 @@ export const projects: Project[] = [
     url: 'https://arcticphilab.no/news/oasis-advancing-oil-spill-analysis-in-the-arctic-with-satellites-and-intelligent-simulation/',
   },
   {
-    name: 'AI for Airport Safety',
+    name: 'FLAIT',
     description: 'A SINTEF-led initiative using artificial intelligence to improve safety in the most hazardous airport zones, in collaboration with NTNU, Avinor, and NORCE.',
     url: 'https://www.sintef.no/publikasjoner/publikasjon/0198cc964d41-54359239-6b1d-4bcf-847f-75a1098faa06/',
   },
