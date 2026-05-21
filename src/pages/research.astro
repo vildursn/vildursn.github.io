@@ -14,8 +14,10 @@ const byYear = publications.reduce<Record<number, Publication[]>>((acc, pub) => 
 const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
 ---
 
-<Base title="Publications" description="Scientific publications by Vilde Gjærum">
-  <h1>Publications</h1>
+<Base title="Research" description="Research by Vilde Gjærum">
+  <h1>Research</h1>
+
+  <h2 class="section-heading">Publications</h2>
 
   {years.length === 0 ? (
     <p class="empty">Publications coming soon.</p>
@@ -64,6 +66,11 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
 <style>
   h1 {
     margin-bottom: 2.5rem;
+  }
+
+  .section-heading {
+    font-size: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
   .empty {
