@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import { publications, type Publication } from '../data/publications';
+import { socialLinks } from '../data/social';
+
+const scholarUrl = socialLinks.find(l => l.label === 'Google Scholar')?.url;
 
 const byYear = publications.reduce<Record<number, Publication[]>>((acc, pub) => {
   (acc[pub.year] ??= []).push(pub);
@@ -16,24 +19,31 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
   {years.length === 0 ? (
     <p class="empty">Publications coming soon.</p>
   ) : (
-    years.map(year => (
-      <section class="year-group">
-        <h2 class="year-label">{year}</h2>
-        <ul>
-          {byYear[year].map(pub => (
-            <li class="pub">
-              <p class="title">
-                {pub.url
-                  ? <a href={pub.url} target="_blank" rel="noopener noreferrer">{pub.title}</a>
-                  : pub.title}
-              </p>
-              <p class="authors">{pub.authors.join(', ')}</p>
-              <p class="venue">{pub.venue}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))
+    <>
+      {years.map(year => (
+        <section class="year-group">
+          <h2 class="year-label">{year}</h2>
+          <ul>
+            {byYear[year].map(pub => (
+              <li class="pub">
+                <p class="title">
+                  {pub.url
+                    ? <a href={pub.url} target="_blank" rel="noopener noreferrer">{pub.title}</a>
+                    : pub.title}
+                </p>
+                <p class="authors">{pub.authors.join(', ')}</p>
+                <p class="venue">{pub.venue}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      {scholarUrl && (
+        <p class="scholar-link">
+          See the full list on <a href={scholarUrl} target="_blank" rel="noopener noreferrer">Google Scholar</a>.
+        </p>
+      )}
+    </>
   )}
 </Base>
 
@@ -99,5 +109,11 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
 
   .venue {
     font-style: italic;
+  }
+
+  .scholar-link {
+    margin-top: 2.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
   }
 </style>
