@@ -10,6 +10,7 @@ import { socialLinks } from '../data/social';
   <section class="hero">
     <h1>Vilde Gjærum</h1>
     <p class="subtitle">AI researcher</p>
+    <div class="rule" aria-hidden="true"></div>
   </section>
 
   <section class="bio">
@@ -40,22 +41,37 @@ import { socialLinks } from '../data/social';
 
 <style>
   .hero {
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    letter-spacing: -0.03em;
   }
 
   .subtitle {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.15rem;
     color: var(--text-muted);
-    font-size: 1.05rem;
-    margin-top: 0.35rem;
+    margin-top: 0.5rem;
+  }
+
+  .rule {
+    width: 2rem;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+    margin-top: 2rem;
   }
 
   .bio {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2.75rem;
     max-width: 58ch;
-    color: var(--text);
+    line-height: 1.75;
   }
 
   .social {
@@ -65,13 +81,20 @@ import { socialLinks } from '../data/social';
   }
 
   .social a {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: var(--text-muted);
     text-decoration: none;
     transition: color 0.15s;
+    letter-spacing: 0.01em;
   }
 
   .social a:hover {
     color: var(--accent);
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 2.5rem;
+    }
   }
 </style>

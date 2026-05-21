@@ -72,12 +72,18 @@ const isActive = (href: string) =>
 
   .nav-link:hover {
     color: var(--text);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
   }
 
   .nav-link.active {
     color: var(--accent);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
   }
 
   @media (max-width: 600px) {

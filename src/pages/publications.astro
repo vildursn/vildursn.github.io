@@ -75,6 +75,14 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+    padding: 0.75rem;
+    margin: 0 -0.75rem;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+
+  .pub:hover {
+    background: var(--accent-subtle);
   }
 
   .title {
