@@ -1,0 +1,173 @@
+---
+interface Props {
+  images: { src: string; caption?: string }[];
+}
+
+const { images } = Astro.props;
+---
+
+{images.length === 0 ? (
+  <div class="empty">
+    <p>Images coming soon.</p>
+  </div>
+) : (
+  <div class="slideshow" id="slideshow">
+    <div class="slides">
+      {images.map((img, i) => (
+        <div class={`slide${i === 0 ? ' active' : ''}`}>
+          <img src={img.src} alt={img.caption ?? `Artwork ${i + 1}`} />
+          {img.caption && <p class="caption">{img.caption}</p>}
+        </div>
+      ))}
+    </div>
+
+    {images.length > 1 && (
+      <>
+        <button class="btn prev" aria-label="Previous artwork">&#8592;</button>
+        <button class="btn next" aria-label="Next artwork">&#8594;</button>
+        <div class="dots" role="tablist">
+          {images.map((_, i) => (
+            <button
+              class={`dot${i === 0 ? ' active' : ''}`}
+              role="tab"
+              aria-label={`Artwork ${i + 1}`}
+              data-index={String(i)}
+            />
+          ))}
+        </div>
+      </>
+    )}
+  </div>
+)}
+
+<script>
+  const slideshow = document.getElementById('slideshow');
+  if (slideshow) {
+    const slides = Array.from(slideshow.querySelectorAll<HTMLElement>('.slide'));
+    const dots = Array.from(slideshow.querySelectorAll<HTMLButtonElement>('.dot'));
+    let current = 0;
+
+    function goTo(n: number) {
+      slides[current].classList.remove('active');
+      dots[current]?.classList.remove('active');
+      current = ((n % slides.length) + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current]?.classList.add('active');
+    }
+
+    slideshow.querySelector('.prev')?.addEventListener('click', () => goTo(current - 1));
+    slideshow.querySelector('.next')?.addEventListener('click', () => goTo(current + 1));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') goTo(current - 1);
+      if (e.key === 'ArrowRight') goTo(current + 1);
+    });
+
+    let touchStartX = 0;
+    slideshow.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    slideshow.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
+    }, { passive: true });
+  }
+</script>
+
+<style>
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .slideshow {
+    position: relative;
+    width: 100%;
+  }
+
+  .slide {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .slide.active {
+    display: flex;
+  }
+
+  .slide img {
+    width: 100%;
+    max-height: 68vh;
+    object-fit: contain;
+    border-radius: 2px;
+  }
+
+  .caption {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+
+  .btn {
+    position: absolute;
+    top: calc(50% - 1.5rem);
+    transform: translateY(-50%);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, border-color 0.15s;
+    z-index: 1;
+    line-height: 1;
+  }
+
+  .btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .prev { left: -1.5rem; }
+  .next { right: -1.5rem; }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .dot.active {
+    background: var(--accent);
+    transform: scale(1.4);
+  }
+
+  @media (max-width: 600px) {
+    .prev { left: 0.25rem; }
+    .next { right: 0.25rem; }
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Slideshow from '../components/Slideshow.astro';
+import { artworks } from '../data/art';
+---
+
+<Base title="Art" description="Art by Vilde Gjærum">
+  <h1>Art</h1>
+  <p class="intro">Things made for fun.</p>
+  <div class="slideshow-wrapper">
+    <Slideshow images={artworks} />
+  </div>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 0.4rem;
+  }
+
+  .intro {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 3rem;
+  }
+
+  .slideshow-wrapper {
+    max-width: 580px;
+  }
+
+  @media (max-width: 600px) {
+    .slideshow-wrapper {
+      max-width: 100%;
+    }
+  }
+</style>

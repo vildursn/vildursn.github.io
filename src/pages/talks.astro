@@ -1,0 +1,139 @@
+---
+import Base from '../layouts/Base.astro';
+import { talks } from '../data/talks';
+import { socialLinks } from '../data/social';
+
+const sorted = [...talks].sort((a, b) => b.year - a.year);
+const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
+---
+
+<Base title="Talks" description="Professional talks by Vilde Gjærum">
+  <h1>Talks</h1>
+
+  <div class="availability">
+    <p>
+      I enjoy giving talks on AI research and related topics. If you'd like me
+      to speak at your event or conference, feel free to reach out.
+    </p>
+    {emailLink && (
+      <a href={emailLink.url} class="contact-link">Get in touch →</a>
+    )}
+  </div>
+
+  {sorted.length === 0 ? (
+    <p class="empty">Talks coming soon.</p>
+  ) : (
+    <ul class="talk-list">
+      {sorted.map(talk => (
+        <li class="talk">
+          <p class="title">{talk.title}</p>
+          <p class="meta">
+            {talk.event} · {talk.location} · {talk.month ? `${talk.month} ` : ''}{talk.year}
+          </p>
+          {(talk.slides || talk.recording) && (
+            <div class="links">
+              {talk.slides && (
+                <a href={talk.slides} target="_blank" rel="noopener noreferrer">Slides</a>
+              )}
+              {talk.recording && (
+                <a href={talk.recording} target="_blank" rel="noopener noreferrer">Recording</a>
+              )}
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .availability {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .availability p {
+    font-size: 0.95rem;
+    max-width: 54ch;
+  }
+
+  .contact-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .contact-link:hover {
+    text-decoration: underline;
+    color: var(--accent);
+  }
+
+  .empty {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .talk-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .talk {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .talk:first-child {
+    padding-top: 0;
+  }
+
+  .title {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+
+  .meta {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .links {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.35rem;
+  }
+
+  .links a {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 0.15rem 0.65rem;
+    border-radius: 2px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .links a:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+</style>

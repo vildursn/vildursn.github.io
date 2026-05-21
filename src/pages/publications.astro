@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import { publications, type Publication } from '../data/publications';
+
+const byYear = publications.reduce<Record<number, Publication[]>>((acc, pub) => {
+  (acc[pub.year] ??= []).push(pub);
+  return acc;
+}, {});
+
+const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+---
+
+<Base title="Publications" description="Scientific publications by Vilde Gjærum">
+  <h1>Publications</h1>
+
+  {years.length === 0 ? (
+    <p class="empty">Publications coming soon.</p>
+  ) : (
+    years.map(year => (
+      <section class="year-group">
+        <h2 class="year-label">{year}</h2>
+        <ul>
+          {byYear[year].map(pub => (
+            <li class="pub">
+              <p class="title">
+                {pub.url
+                  ? <a href={pub.url} target="_blank" rel="noopener noreferrer">{pub.title}</a>
+                  : pub.title}
+              </p>
+              <p class="authors">{pub.authors.join(', ')}</p>
+              <p class="venue">{pub.venue}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  )}
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 2.5rem;
+  }
+
+  .empty {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 1rem;
+  }
+
+  .year-group {
+    margin-bottom: 2.5rem;
+  }
+
+  .year-label {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .pub {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .title {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.45;
+  }
+
+  .authors,
+  .venue {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .venue {
+    font-style: italic;
+  }
+</style>
