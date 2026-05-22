@@ -16,14 +16,25 @@ import { featuredPhotos } from '../data/featured';
 
   <section class="bio">
     <p>
-      Hi, I'm Vilde — a researcher, developer, and occasional artist based in Norway.
+      Hi, I'm Vilde — a <span id="rotating-word">researcher</span> based in Norway.
+      I build AI that I hope makes the world a little better, give talks to make it feel less scary,
+      and make art whenever I can.
     </p>
     <p>
-      I have a PhD in Explainable AI from NTNU, and I work at <a href="https://www.dips.com" target="_blank" rel="noopener noreferrer">DIPS</a>
-      on NLP for clinical text and making AI reliable in high-stakes healthcare settings.
+      I'm drawn to making things. Professionally that's meant autonomous drones with
+      <span class="tip" data-tip="Norway's premier autonomous drone racing team">Ascend NTNU</span>,
+      satellite oil spill detection at
+      <span class="tip" data-tip="Kongsberg Satellite Services — detecting oil spills from space">KSAT</span>,
+      and now AI for healthcare at
+      <span class="tip" data-tip="Norwegian health tech, used by clinicians every day">DIPS</span>.
+      Outside of work I apply the same energy to whatever hobby I'm currently obsessed with —
+      mountain running, ceramics, salsa, crossfit, skiing, volleyball. The list keeps growing.
     </p>
     <p>
-      I care about two things: understanding how these systems actually work, and making sure they're genuinely useful for real people.
+      My research is in <span class="tip" data-tip="Explainable AI — making sense of what models actually do">XAI</span>,
+      robotics, and machine learning. I have a degree in cybernetics and robotics and a PhD in
+      Explainable AI from NTNU — because "what is this model actually doing?" felt like a question
+      worth spending years on.
     </p>
   </section>
 
@@ -41,6 +52,22 @@ import { featuredPhotos } from '../data/featured';
     ))}
   </nav>
 </Base>
+
+<script>
+  const word = document.getElementById('rotating-word');
+  const words = ['researcher', 'developer', 'artist', 'maker'];
+  let i = 0;
+
+  setInterval(() => {
+    if (!word) return;
+    word.style.opacity = '0';
+    setTimeout(() => {
+      i = (i + 1) % words.length;
+      word.textContent = words[i];
+      word.style.opacity = '1';
+    }, 300);
+  }, 2500);
+</script>
 
 <style>
   .hero {
@@ -67,6 +94,43 @@ import { featuredPhotos } from '../data/featured';
     margin-bottom: 2.75rem;
     max-width: 58ch;
     line-height: 1.75;
+  }
+
+  #rotating-word {
+    color: var(--accent-soft);
+    transition: opacity 0.3s ease;
+  }
+
+  .tip {
+    position: relative;
+    cursor: help;
+    text-decoration: underline dotted;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+  }
+
+  .tip::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    padding: 0.35rem 0.65rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    z-index: 10;
+  }
+
+  .tip:hover::after {
+    opacity: 1;
   }
 
   .social {
