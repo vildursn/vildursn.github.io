@@ -1,0 +1,41 @@
+---
+import type { FeaturedPhoto } from '../data/featured';
+
+interface Props {
+  photos: FeaturedPhoto[];
+}
+
+const { photos } = Astro.props;
+---
+
+{photos.length > 0 && (
+  <div class="photo-strip">
+    {photos.map(({ src, alt }) => (
+      <img src={src} alt={alt} />
+    ))}
+  </div>
+)}
+
+<style>
+  .photo-strip {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 2.75rem;
+    margin-left: -0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .photo-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .photo-strip img {
+    height: 220px;
+    width: auto;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+</style>

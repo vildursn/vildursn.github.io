@@ -6,6 +6,7 @@ export interface Talk {
   month?: string;
   slides?: string;
   recording?: string;
+  photo?: string;
 }
 
 // Add your talks here, newest first

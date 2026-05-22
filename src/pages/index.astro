@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import FeaturedPhotos from '../components/FeaturedPhotos.astro';
 import { socialLinks } from '../data/social';
+import { featuredPhotos } from '../data/featured';
 ---
 
 <Base
@@ -9,26 +11,23 @@ import { socialLinks } from '../data/social';
 >
   <section class="hero">
     <h1>Vilde Gjærum</h1>
-    <p class="subtitle">AI developer</p>
+    <p class="subtitle">AI developer & researcher</p>
   </section>
 
   <section class="bio">
     <p>
-      I hold an MSc in Cybernetics and Robotics and a PhD in Explainable AI,
-      both from NTNU. My research focused on making AI systems more transparent
-      — understanding not just what a model predicts, but why.
+      Hi, I'm Vilde — a researcher, developer, and occasional artist based in Norway.
     </p>
     <p>
-      Today I work as an AI developer at <a href="https://www.dips.com" target="_blank" rel="noopener noreferrer">DIPS</a>,
-      a Norwegian company building software that clinicians rely on every day.
-      My work focuses on NLP for clinical text and the infrastructure that makes
-      AI reliable in high-stakes environments.
+      I have a PhD in Explainable AI from NTNU, and I work at <a href="https://www.dips.com" target="_blank" rel="noopener noreferrer">DIPS</a>
+      on NLP for clinical text and making AI reliable in high-stakes healthcare settings.
     </p>
     <p>
-      I'm drawn to two things: wanting to understand how these systems actually
-      work, and wanting them to be genuinely useful for real people.
+      I care about two things: understanding how these systems actually work, and making sure they're genuinely useful for real people.
     </p>
   </section>
+
+  <FeaturedPhotos photos={featuredPhotos} />
 
   <nav class="social" aria-label="Links">
     {socialLinks.map(({ label, url }) => (
@@ -61,7 +60,7 @@ import { socialLinks } from '../data/social';
     margin-top: 0.5rem;
   }
 
-.bio {
+  .bio {
     display: flex;
     flex-direction: column;
     gap: 1rem;
