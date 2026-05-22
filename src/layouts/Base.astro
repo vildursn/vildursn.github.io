@@ -25,6 +25,13 @@ const pageTitle = title === 'Vilde Gjærum' ? title : `${title} · Vilde Gjærum
     href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap"
     rel="stylesheet"
   />
+  <script is:inline>
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (stored === 'dark' || (!stored && prefersDark)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
 </head>
 <body>
   <Nav />
@@ -42,18 +49,30 @@ const pageTitle = title === 'Vilde Gjærum' ? title : `${title} · Vilde Gjærum
   }
 
   :root {
-    --bg: #F5F0EB;
-    --surface: #EAE3DA;
-    --border: #D5C9BE;
-    --text: #28221E;
-    --text-muted: #6A5E57;
-    --accent: #C07B65;
-    --accent-subtle: #EDD5CC;
-    --accent2: #8AA688;
-    --accent2-subtle: #DDE8DA;
+    --bg: #F2EFE8;
+    --surface: #FAF7F1;
+    --primary: #5F7558;
+    --secondary: #7B8B6F;
+    --accent: #B08968;
+    --accent-soft: #A3B18A;
+    --text: #2F2A24;
+    --text-muted: #6B6257;
+    --border: #DDD6CA;
     --font-serif: 'Lora', Georgia, serif;
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
     --max-width: 760px;
+  }
+
+  .dark {
+    --bg: #161A17;
+    --surface: #202722;
+    --primary: #6E846B;
+    --secondary: #95A38C;
+    --accent: #B08968;
+    --accent-soft: #7C8A6D;
+    --text: #ECE7DF;
+    --text-muted: #B7B1A8;
+    --border: #313933;
   }
 
   html {

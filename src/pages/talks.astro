@@ -52,7 +52,7 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
   }
 
   .availability {
-    background: var(--accent2-subtle);
+    background: var(--surface);
     border: 1px solid var(--border);
     padding: 1.5rem 1.75rem;
     margin-bottom: 3rem;
@@ -71,7 +71,7 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
   .contact-link {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--accent2);
+    color: var(--accent-soft);
     text-decoration: none;
     align-self: flex-start;
   }
@@ -79,7 +79,7 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
   .contact-link:hover {
     text-decoration: underline;
     text-underline-offset: 3px;
-    color: var(--accent2);
+    color: var(--accent-soft);
   }
 
   .empty {
@@ -99,7 +99,7 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
     flex-direction: column;
     gap: 0.25rem;
     padding: 1.5rem 0;
-    border-bottom: 1px solid var(--accent2-subtle);
+    border-bottom: 1px solid var(--surface);
   }
 
   .talk:first-child {
@@ -126,16 +126,16 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
 
   .links a {
     font-size: 0.8rem;
-    color: var(--accent2);
+    color: var(--accent-soft);
     text-decoration: none;
-    border: 1px solid var(--accent2);
+    border: 1px solid var(--accent-soft);
     padding: 0.15rem 0.65rem;
     border-radius: 2px;
     transition: background 0.15s, color 0.15s;
   }
 
   .links a:hover {
-    background: var(--accent2);
+    background: var(--accent-soft);
     color: var(--bg);
   }
 </style>

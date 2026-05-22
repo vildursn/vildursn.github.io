@@ -15,17 +15,31 @@ const isActive = (href: string) =>
 <header>
   <nav>
     <a href="/" class="site-name">Vilde Gjærum</a>
-    <ul role="list">
-      {links.map(({ href, label }) => (
-        <li>
-          <a href={href} class:list={['nav-link', { active: isActive(href) }]}>
-            {label}
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div class="nav-right">
+      <ul role="list">
+        {links.map(({ href, label }) => (
+          <li>
+            <a href={href} class:list={['nav-link', { active: isActive(href) }]}>
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span class="icon-light">☀︎</span>
+        <span class="icon-dark">☽</span>
+      </button>
+    </div>
   </nav>
 </header>
+
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  toggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
 
 <style>
   header {
@@ -39,6 +53,12 @@ const isActive = (href: string) =>
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
   }
 
   .site-name {
@@ -79,12 +99,30 @@ const isActive = (href: string) =>
   }
 
   .nav-link.active {
-    color: var(--accent2);
+    color: var(--accent-soft);
     text-decoration: underline;
-    text-decoration-color: var(--accent2);
+    text-decoration-color: var(--accent-soft);
     text-underline-offset: 4px;
     text-decoration-thickness: 1.5px;
   }
+
+  #theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1;
+    transition: color 0.15s;
+  }
+
+  #theme-toggle:hover {
+    color: var(--text);
+  }
+
+  :global(.dark) #theme-toggle .icon-light { display: none; }
+  :global(:not(.dark)) #theme-toggle .icon-dark { display: none; }
 
   @media (max-width: 600px) {
     nav {
