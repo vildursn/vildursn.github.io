@@ -55,7 +55,7 @@ import { featuredPhotos } from '../data/featured';
 
 <script>
   const word = document.getElementById('rotating-word');
-  const words = ['researcher', 'developer', 'artist', 'maker'];
+  const words = ['researcher', 'AI developer', 'artist', 'engineer'];
   let i = 0;
 
   setInterval(() => {
@@ -98,7 +98,8 @@ import { featuredPhotos } from '../data/featured';
 
   #rotating-word {
     display: inline-block;
-    min-width: 6.5rem;
+    min-width: 8rem;
+    text-align: center;
     color: var(--accent-soft);
     transition: opacity 0.3s ease;
   }
