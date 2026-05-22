@@ -7,8 +7,9 @@ const sorted = [...talks].sort((a, b) => b.year - a.year);
 const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
 ---
 
-<Base title="Talks" description="Professional talks by Vilde Gjærum">
-  <h1>Talks</h1>
+<Base title="Outreach" description="Outreach by Vilde Gjærum">
+  <h1>Outreach</h1>
+  <h2 class="section-heading">Talks</h2>
 
   <div class="availability">
     <p>
@@ -49,6 +50,11 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
 <style>
   h1 {
     margin-bottom: 2rem;
+  }
+
+  .section-heading {
+    font-size: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
   .availability {
