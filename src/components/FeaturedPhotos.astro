@@ -10,8 +10,15 @@ const { photos } = Astro.props;
 
 {photos.length > 0 && (
   <div class="photo-strip">
-    {photos.map(({ src, alt }) => (
-      <img src={src} alt={alt} />
+    {photos.map(({ src, alt, caption }) => (
+      <div class="photo-wrap">
+        <img src={src} alt={alt} />
+        {caption && (
+          <div class="overlay">
+            <p>{caption}</p>
+          </div>
+        )}
+      </div>
     ))}
   </div>
 )}
@@ -31,11 +38,45 @@ const { photos } = Astro.props;
     display: none;
   }
 
-  .photo-strip img {
+  .photo-wrap {
+    position: relative;
     height: 220px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .photo-wrap img {
+    height: 100%;
     width: auto;
     object-fit: cover;
-    border-radius: 4px;
-    flex-shrink: 0;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .photo-wrap:hover img {
+    transform: scale(1.04);
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .photo-wrap:hover .overlay {
+    opacity: 1;
+  }
+
+  .overlay p {
+    color: #fff;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin: 0;
   }
 </style>
