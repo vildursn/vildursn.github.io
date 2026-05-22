@@ -19,5 +19,14 @@ export const talks: Talk[] = [
   //   month: 'June',
   //   slides: 'https://...',
   //   recording: 'https://...',
+  //   photo: '/photos/your-talk.jpg',
   // },
+  {
+    title: 'Placeholder Talk Title',
+    event: 'Example Conference',
+    location: 'Oslo, Norway',
+    year: 2024,
+    month: 'March',
+    photo: 'https://picsum.photos/seed/talk/800/400',
+  },
 ];
