@@ -25,8 +25,58 @@ const isActive = (href: string) =>
       ))}
     </ul>
   </nav>
+  <div class="controls">
+    <div class="pill" id="theme-pill" role="button" tabindex="0" aria-label="Toggle dark mode">
+      <span class="pill-label">☀︎</span>
+      <div class="track">
+        <span class="thumb" id="theme-thumb"></span>
+      </div>
+      <span class="pill-label">☽</span>
+    </div>
+    <div class="pill" id="lang-pill" role="button" tabindex="0" aria-label="Toggle language">
+      <span class="pill-label">en</span>
+      <div class="track">
+        <span class="thumb" id="lang-thumb"></span>
+      </div>
+      <span class="pill-label">no</span>
+    </div>
+  </div>
 </header>
 
+<script>
+  // theme
+  const themePill = document.getElementById('theme-pill');
+  const themeThumb = document.getElementById('theme-thumb');
+
+  function applyTheme(dark: boolean) {
+    document.documentElement.classList.toggle('dark', dark);
+    if (themeThumb) themeThumb.style.transform = dark ? 'translateX(1rem)' : 'translateX(0)';
+  }
+
+  applyTheme(localStorage.getItem('theme') !== 'light');
+
+  themePill?.addEventListener('click', () => {
+    const isDark = !document.documentElement.classList.contains('dark');
+    applyTheme(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+  themePill?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); themePill.click(); }
+  });
+
+  // lang (placeholder — no actual functionality yet)
+  const langPill = document.getElementById('lang-pill');
+  const langThumb = document.getElementById('lang-thumb');
+  let langIsNo = false;
+
+  langPill?.addEventListener('click', () => {
+    langIsNo = !langIsNo;
+    if (langThumb) langThumb.style.transform = langIsNo ? 'translateX(1rem)' : 'translateX(0)';
+  });
+  langPill?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); langPill.click(); }
+  });
+</script>
 
 <style>
   header {
@@ -87,6 +137,56 @@ const isActive = (href: string) =>
     text-decoration-thickness: 1.5px;
   }
 
+  .controls {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0.5rem 2rem 0.75rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .pill-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    transition: color 0.15s;
+  }
+
+  .pill:hover .pill-label {
+    color: var(--text);
+  }
+
+  .track {
+    position: relative;
+    width: 2.25rem;
+    height: 1.25rem;
+    border-radius: 9999px;
+    background: var(--border);
+    transition: background 0.2s;
+  }
+
+  .thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s;
+    display: block;
+  }
+
   @media (max-width: 600px) {
     nav {
       flex-direction: column;
@@ -96,6 +196,11 @@ const isActive = (href: string) =>
 
     ul {
       gap: 1.5rem;
+    }
+
+    .controls {
+      padding: 0.25rem 1.5rem 0.75rem;
+      justify-content: center;
     }
   }
 </style>
