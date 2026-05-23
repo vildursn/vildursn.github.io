@@ -2,10 +2,10 @@
 const { pathname } = Astro.url;
 
 const links = [
-  { href: '/', label: 'about' },
-  { href: '/research', label: 'research' },
-  { href: '/outreach', label: 'outreach' },
-  { href: '/art', label: 'art' },
+  { href: '/', label: 'about', i18n: 'nav.about' },
+  { href: '/research', label: 'research', i18n: 'nav.research' },
+  { href: '/outreach', label: 'outreach', i18n: 'nav.outreach' },
+  { href: '/art', label: 'art', i18n: 'nav.art' },
 ];
 
 const isActive = (href: string) =>
@@ -16,7 +16,7 @@ const isActive = (href: string) =>
   <div class="hero-drawn">
     <div class="name-wrap">
       <div class="hi-label">
-        <em>Hi, I'm</em>
+        <em data-i18n="nav.greeting">Hi, I'm</em>
         <svg width="38" height="36" viewBox="0 0 62 58" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4,28 C14,18 24,38 34,26 C44,14 54,34 48,52" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
           <path d="M48,52 L40,44" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -38,7 +38,7 @@ const isActive = (href: string) =>
               <path id="happy-curve" d="M5,16 Q45,32 85,16 Q125,2 165,16" />
             </defs>
             <text font-family="Lora, Georgia, serif" font-style="italic" font-size="13" fill="currentColor">
-              <textPath href="#happy-curve">I'm happy you're here!</textPath>
+              <textPath href="#happy-curve" data-i18n="nav.happy">I'm happy you're here!</textPath>
             </text>
           </svg>
         </div>
@@ -48,10 +48,10 @@ const isActive = (href: string) =>
   <hr class="divider" />
   <nav>
     <ul role="list">
-      {links.map(({ href, label }) => (
+      {links.map((link) => (
         <li>
-          <a href={href} class:list={['nav-link', { active: isActive(href) }]}>
-            {label}
+          <a href={link.href} class:list={['nav-link', { active: isActive(link.href) }]} data-i18n={link.i18n}>
+            {link.label}
           </a>
         </li>
       ))}
@@ -96,14 +96,21 @@ const isActive = (href: string) =>
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); themePill.click(); }
   });
 
-  // lang (placeholder — no actual functionality yet)
+  // lang
   const langPill = document.getElementById('lang-pill');
   const langThumb = document.getElementById('lang-thumb');
-  let langIsNo = false;
+
+  function applyLangToggleUI(isNo: boolean) {
+    if (langThumb) langThumb.style.transform = isNo ? 'translateX(1rem)' : 'translateX(0)';
+  }
+
+  applyLangToggleUI((localStorage.getItem('lang') || 'en') === 'no');
 
   langPill?.addEventListener('click', () => {
-    langIsNo = !langIsNo;
-    if (langThumb) langThumb.style.transform = langIsNo ? 'translateX(1rem)' : 'translateX(0)';
+    const isNo = document.documentElement.lang !== 'no';
+    localStorage.setItem('lang', isNo ? 'no' : 'en');
+    (window as any).applyLang(isNo ? 'no' : 'en');
+    applyLangToggleUI(isNo);
   });
   langPill?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); langPill.click(); }

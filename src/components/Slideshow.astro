@@ -8,7 +8,7 @@ const { images } = Astro.props;
 
 {images.length === 0 ? (
   <div class="empty">
-    <p>Images coming soon.</p>
+    <p data-i18n="slideshow.empty">Images coming soon.</p>
   </div>
 ) : (
   <div class="slideshow" id="slideshow">
@@ -23,8 +23,8 @@ const { images } = Astro.props;
 
       {images.length > 1 && (
         <>
-          <button class="btn prev" aria-label="Previous artwork">&#8592;</button>
-          <button class="btn next" aria-label="Next artwork">&#8594;</button>
+          <button class="btn prev" aria-label="Previous artwork" data-i18n-aria="slideshow.prev">&#8592;</button>
+          <button class="btn next" aria-label="Next artwork" data-i18n-aria="slideshow.next">&#8594;</button>
         </>
       )}
     </div>
