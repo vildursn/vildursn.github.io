@@ -5,5 +5,6 @@ export interface Artwork {
 
 // Place images in public/art/ and list them here
 export const artworks: Artwork[] = [
-  // { src: '/art/filename.jpg', caption: 'Optional caption' },
+  { src: '/art/ceramic_whales.jpeg' },
+  { src: '/art/kattekoppen.jpeg' },
 ];
