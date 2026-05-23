@@ -1,6 +1,5 @@
 ---
 import Nav from '../components/Nav.astro';
-import { translations, wordLists } from '../i18n/translations';
 
 interface Props {
   title: string;
@@ -30,8 +29,6 @@ const pageTitle = title === 'Vilde Gjærum' ? title : `${title} · Vilde Gjærum
     if (localStorage.getItem('theme') !== 'light') {
       document.documentElement.classList.add('dark');
     }
-    const _savedLang = localStorage.getItem('lang') || 'en';
-    document.documentElement.lang = _savedLang;
   </script>
 </head>
 <body>
@@ -40,30 +37,6 @@ const pageTitle = title === 'Vilde Gjærum' ? title : `${title} · Vilde Gjærum
     <slot />
   </main>
 
-  <script is:inline define:vars={{ translations, wordLists }}>
-    window._translations = translations;
-    window._wordLists = wordLists;
-
-    window.applyLang = function(lang) {
-      const t = translations[lang] || translations.en;
-      document.querySelectorAll('[data-i18n]').forEach(function(el) {
-        const key = el.getAttribute('data-i18n');
-        if (key && t[key] !== undefined) el.textContent = t[key];
-      });
-      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
-        const key = el.getAttribute('data-i18n-html');
-        if (key && t[key] !== undefined) el.innerHTML = t[key];
-      });
-      document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
-        const key = el.getAttribute('data-i18n-aria');
-        if (key && t[key] !== undefined) el.setAttribute('aria-label', t[key]);
-      });
-      document.documentElement.lang = lang;
-      document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: lang } }));
-    };
-
-    window.applyLang(localStorage.getItem('lang') || 'en');
-  </script>
 </body>
 </html>
 

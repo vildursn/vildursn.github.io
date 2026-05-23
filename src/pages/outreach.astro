@@ -8,21 +8,21 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
 ---
 
 <Base title="Outreach" description="Outreach by Vilde Gjærum">
-  <h1 data-i18n="outreach.title">Outreach</h1>
-  <h2 class="section-heading" data-i18n="outreach.talks">Talks</h2>
+  <h1>Outreach</h1>
+  <h2 class="section-heading">Talks</h2>
 
   <div class="availability">
-    <p data-i18n="outreach.cta">
+    <p>
       I enjoy giving talks on AI research and related topics. If you'd like me
       to speak at your event or conference, feel free to reach out.
     </p>
     {emailLink && (
-      <a href={emailLink.url} class="contact-link" data-i18n="outreach.contact">Get in touch →</a>
+      <a href={emailLink.url} class="contact-link">Get in touch →</a>
     )}
   </div>
 
   {sorted.length === 0 ? (
-    <p class="empty" data-i18n="outreach.talks-empty">Talks coming soon.</p>
+    <p class="empty">Talks coming soon.</p>
   ) : (
     <ul class="talk-list">
       {sorted.map(talk => (
@@ -37,10 +37,10 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
           {(talk.slides || talk.recording) && (
             <div class="links">
               {talk.slides && (
-                <a href={talk.slides} target="_blank" rel="noopener noreferrer" data-i18n="outreach.slides">Slides</a>
+                <a href={talk.slides} target="_blank" rel="noopener noreferrer">Slides</a>
               )}
               {talk.recording && (
-                <a href={talk.recording} target="_blank" rel="noopener noreferrer" data-i18n="outreach.recording">Recording</a>
+                <a href={talk.recording} target="_blank" rel="noopener noreferrer">Recording</a>
               )}
             </div>
           )}

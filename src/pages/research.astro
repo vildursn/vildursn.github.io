@@ -15,12 +15,12 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
 ---
 
 <Base title="Research" description="Research by Vilde Gjærum">
-  <h1 data-i18n="research.title">Research</h1>
+  <h1>Research</h1>
 
-  <h2 class="section-heading" data-i18n="research.publications">Publications</h2>
+  <h2 class="section-heading">Publications</h2>
 
   {years.length === 0 ? (
-    <p class="empty" data-i18n="research.pubs-empty">Publications coming soon.</p>
+    <p class="empty">Publications coming soon.</p>
   ) : (
     <>
       {years.map(year => (
@@ -43,13 +43,13 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
       ))}
       {scholarUrl && (
         <p class="scholar-link">
-          <span data-i18n="research.scholar-prefix">See the full list on</span> <a href={scholarUrl} target="_blank" rel="noopener noreferrer">Google Scholar</a>.
+          See the full list on <a href={scholarUrl} target="_blank" rel="noopener noreferrer">Google Scholar</a>.
         </p>
       )}
     </>
   )}
   <section class="projects-section">
-    <h2 data-i18n="research.projects">Research Projects</h2>
+    <h2>Research Projects</h2>
     <ul class="project-list">
       {projects.map(project => (
         <li class="project">
