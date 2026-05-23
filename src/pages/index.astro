@@ -11,7 +11,7 @@ import { featuredPhotos } from '../data/featured';
 >
   <section class="bio">
     <p>
-      Hi, I'm Vilde — a <span id="rotating-word">researcher</span> based in Norway.
+      Hi, I'm Vilde — <span id="rotating-article">a</span> <span id="rotating-word">researcher</span> based in Norway.
       I build AI that I hope makes the world a little better, give talks to make it feel less scary,
       and make art whenever I can.
     </p>
@@ -50,7 +50,13 @@ import { featuredPhotos } from '../data/featured';
 
 <script>
   const word = document.getElementById('rotating-word');
-  const words = ['AI developer', 'AI researcher', 'hobby artist', 'engineer'];
+  const article = document.getElementById('rotating-article');
+  const words = [
+    { text: 'AI developer', article: 'an' },
+    { text: 'AI researcher', article: 'an' },
+    { text: 'hobby artist', article: 'a' },
+    { text: 'engineer', article: 'an' },
+  ];
   let i = 0;
 
   setInterval(() => {
@@ -58,7 +64,8 @@ import { featuredPhotos } from '../data/featured';
     word.style.opacity = '0';
     setTimeout(() => {
       i = (i + 1) % words.length;
-      word.textContent = words[i];
+      word.textContent = words[i].text;
+      if (article) article.textContent = words[i].article;
       word.style.opacity = '1';
     }, 300);
   }, 2500);
@@ -75,7 +82,7 @@ import { featuredPhotos } from '../data/featured';
 
   #rotating-word {
     display: inline-block;
-    min-width: 9rem;
+    min-width: 6.5rem;
     text-align: center;
     color: var(--accent-soft);
     transition: opacity 0.3s ease;
