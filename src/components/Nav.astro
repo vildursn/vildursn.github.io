@@ -302,8 +302,36 @@ const isActive = (href: string) =>
       padding: 1rem 1.5rem 0;
     }
 
+    .hi-label {
+      margin-left: -1rem;
+    }
+
+    .name-row {
+      flex-wrap: wrap;
+    }
+
+    .meet-label {
+      flex: 0 0 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.1rem;
+      padding-bottom: 0.25rem;
+    }
+
+    .meet-label > svg:first-child {
+      transform: rotate(90deg);
+    }
+
+
     ul {
-      gap: 1.5rem;
+      gap: 1.25rem;
+    }
+
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.6rem 0;
     }
   }
 </style>
