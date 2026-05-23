@@ -73,6 +73,13 @@ const { photos } = Astro.props;
     opacity: 1;
   }
 
+  @media (hover: none) {
+    .overlay {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.32);
+    }
+  }
+
   .overlay p {
     color: #fff;
     font-size: 0.8rem;
