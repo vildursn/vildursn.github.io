@@ -13,8 +13,40 @@ const isActive = (href: string) =>
 ---
 
 <header>
+  <div class="hero-drawn">
+    <div class="name-wrap">
+      <div class="hi-label">
+        <em>Hi, I'm</em>
+        <svg width="38" height="36" viewBox="0 0 62 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4,28 C14,18 24,38 34,26 C44,14 54,34 48,52" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M48,52 L40,44" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M48,52 L56,44" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="name-row">
+        <a href="/" class="display-name">
+          <span class="n-sans">Vilde</span><span class="n-serif"> Gjærum</span>
+        </a>
+        <div class="meet-label">
+          <svg width="44" height="26" viewBox="0 0 70 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2,36 C10,16 20,44 34,24 C44,6 50,24 56,22 L66,22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M66,22 L59,18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M66,22 L59,26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <svg class="curved-text" width="170" height="32" viewBox="0 0 170 32">
+            <defs>
+              <path id="happy-curve" d="M5,16 Q45,32 85,16 Q125,2 165,16" />
+            </defs>
+            <text font-family="Lora, Georgia, serif" font-style="italic" font-size="13" fill="currentColor">
+              <textPath href="#happy-curve">I'm happy you're here!</textPath>
+            </text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="divider" />
   <nav>
-    <a href="/" class="site-name">Vilde Gjærum</a>
     <ul role="list">
       {links.map(({ href, label }) => (
         <li>
@@ -25,24 +57,23 @@ const isActive = (href: string) =>
       ))}
     </ul>
   </nav>
+  <div class="controls">
+    <div class="pill" id="theme-pill" role="button" tabindex="0" aria-label="Toggle dark mode">
+      <span class="pill-label">☀︎</span>
+      <div class="track">
+        <span class="thumb" id="theme-thumb"></span>
+      </div>
+      <span class="pill-label">☽</span>
+    </div>
+    <div class="pill" id="lang-pill" role="button" tabindex="0" aria-label="Toggle language">
+      <span class="pill-label">en</span>
+      <div class="track">
+        <span class="thumb" id="lang-thumb"></span>
+      </div>
+      <span class="pill-label">no</span>
+    </div>
+  </div>
 </header>
-
-<div class="controls">
-  <div class="pill" id="theme-pill" role="button" tabindex="0" aria-label="Toggle dark mode">
-    <span class="pill-label">☀︎</span>
-    <div class="track">
-      <span class="thumb" id="theme-thumb"></span>
-    </div>
-    <span class="pill-label">☽</span>
-  </div>
-  <div class="pill" id="lang-pill" role="button" tabindex="0" aria-label="Toggle language">
-    <span class="pill-label">en</span>
-    <div class="track">
-      <span class="thumb" id="lang-thumb"></span>
-    </div>
-    <span class="pill-label">no</span>
-  </div>
-</div>
 
 <script>
   // theme
@@ -81,31 +112,110 @@ const isActive = (href: string) =>
 
 <style>
   header {
-    border-bottom: 1px solid var(--border);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 1.5rem 2rem 0;
+  }
+
+  .hero-drawn {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0 0.75rem;
+  }
+
+  .name-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hi-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: -0.4rem;
+    margin-left: -3rem;
+  }
+
+  .hi-label em {
+    display: inline-block;
+    transform: rotate(-30deg);
+    margin-top: 0.5rem;
+  }
+
+  .hi-label svg {
+    color: var(--text-muted);
+    transform: translateY(-6px);
+  }
+
+  .name-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.4rem;
+  }
+
+  .display-name {
+    display: block;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .n-sans {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .n-serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .display-name:hover .n-sans,
+  .display-name:hover .n-serif {
+    color: var(--accent);
+  }
+
+  .meet-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding-bottom: 0.1rem;
+  }
+
+  .meet-label svg {
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .curved-text {
+    overflow: visible;
+    transform: rotate(-15deg);
+    transform-origin: left center;
+    margin-top: 10px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
   }
 
   nav {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 1.25rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .site-name {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--text);
-    letter-spacing: -0.01em;
-    transition: color 0.15s;
-  }
-
-  .site-name:hover {
-    color: var(--accent);
-    text-decoration: none;
+    padding: 0.75rem 0;
   }
 
   ul {
@@ -139,12 +249,9 @@ const isActive = (href: string) =>
   }
 
   .controls {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0.5rem 2rem 0.75rem;
     display: flex;
-    justify-content: flex-end;
     gap: 1rem;
+    padding-bottom: 0.75rem;
   }
 
   .pill {
@@ -189,19 +296,12 @@ const isActive = (href: string) =>
   }
 
   @media (max-width: 600px) {
-    nav {
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1rem 1.5rem;
+    header {
+      padding: 1rem 1.5rem 0;
     }
 
     ul {
       gap: 1.5rem;
-    }
-
-    .controls {
-      padding: 0.25rem 1.5rem 0.75rem;
-      justify-content: center;
     }
   }
 </style>
