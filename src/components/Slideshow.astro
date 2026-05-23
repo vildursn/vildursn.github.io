@@ -12,30 +12,40 @@ const { images } = Astro.props;
   </div>
 ) : (
   <div class="slideshow" id="slideshow">
-    <div class="slides">
-      {images.map((img, i) => (
-        <div class={`slide${i === 0 ? ' active' : ''}`}>
-          <img src={img.src} alt={img.caption ?? `Artwork ${i + 1}`} />
-          {img.caption && <p class="caption">{img.caption}</p>}
-        </div>
-      ))}
+    <div class="stage">
+      <div class="track">
+        {images.map((img, i) => (
+          <div class="slide" data-index={i} data-caption={img.caption ?? ''}>
+            <img src={img.src} alt={img.caption ?? `Artwork ${i + 1}`} />
+          </div>
+        ))}
+      </div>
+
+      {images.length > 1 && (
+        <>
+          <button class="btn prev" aria-label="Previous artwork">&#8592;</button>
+          <button class="btn next" aria-label="Next artwork">&#8594;</button>
+        </>
+      )}
     </div>
 
+    {images.some(img => img.caption) && (
+      <p class="caption" id="slideshow-caption">
+        {images[0].caption ?? ''}
+      </p>
+    )}
+
     {images.length > 1 && (
-      <>
-        <button class="btn prev" aria-label="Previous artwork">&#8592;</button>
-        <button class="btn next" aria-label="Next artwork">&#8594;</button>
-        <div class="dots" role="tablist">
-          {images.map((_, i) => (
-            <button
-              class={`dot${i === 0 ? ' active' : ''}`}
-              role="tab"
-              aria-label={`Artwork ${i + 1}`}
-              data-index={String(i)}
-            />
-          ))}
-        </div>
-      </>
+      <div class="dots" role="tablist">
+        {images.map((_, i) => (
+          <button
+            class={`dot${i === 0 ? ' active' : ''}`}
+            role="tab"
+            aria-label={`Artwork ${i + 1}`}
+            data-index={String(i)}
+          />
+        ))}
+      </div>
     )}
   </div>
 )}
@@ -45,14 +55,40 @@ const { images } = Astro.props;
   if (slideshow) {
     const slides = Array.from(slideshow.querySelectorAll<HTMLElement>('.slide'));
     const dots = Array.from(slideshow.querySelectorAll<HTMLButtonElement>('.dot'));
+    const captionEl = slideshow.querySelector<HTMLElement>('#slideshow-caption');
     let current = 0;
+    const total = slides.length;
 
-    function goTo(n: number) {
-      slides[current].classList.remove('active');
-      dots[current]?.classList.remove('active');
-      current = ((n % slides.length) + slides.length) % slides.length;
-      slides[current].classList.add('active');
-      dots[current]?.classList.add('active');
+    const captions = slides.map(s => s.dataset.caption ?? '');
+
+    function update(animate: boolean) {
+      slides.forEach((slide, i) => {
+        let offset = i - current;
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+
+        if (!animate) slide.style.transition = 'none';
+        slide.style.transform = `translateX(${offset * 92}%)`;
+        slide.style.opacity = offset === 0 ? '1' : Math.abs(offset) === 1 ? '0.32' : '0';
+        slide.style.pointerEvents = offset === 0 ? '' : 'none';
+        slide.setAttribute('aria-hidden', offset === 0 ? 'false' : 'true');
+        if (!animate) {
+          // Force reflow before re-enabling transitions
+          void slide.offsetWidth;
+          slide.style.transition = '';
+        }
+      });
+
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+
+      if (captionEl) captionEl.textContent = captions[current] ?? '';
+    }
+
+    update(false);
+
+    function goTo(idx: number) {
+      current = ((idx % total) + total) % total;
+      update(true);
     }
 
     slideshow.querySelector('.prev')?.addEventListener('click', () => goTo(current - 1));
@@ -70,7 +106,7 @@ const { images } = Astro.props;
     }, { passive: true });
     slideshow.addEventListener('touchend', (e) => {
       const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
+      if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
     }, { passive: true });
   }
 </script>
@@ -86,26 +122,41 @@ const { images } = Astro.props;
   }
 
   .slideshow {
+    width: 100%;
+  }
+
+  .stage {
+    position: relative;
+    height: 62vh;
+  }
+
+  .track {
     position: relative;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 
   .slide {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-  }
-
-  .slide.active {
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    height: 100%;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.38s ease, opacity 0.38s ease;
+    will-change: transform, opacity;
   }
 
   .slide img {
-    width: 100%;
-    max-height: 68vh;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
     border-radius: 2px;
+    display: block;
   }
 
   .caption {
@@ -113,11 +164,13 @@ const { images } = Astro.props;
     font-style: italic;
     font-size: 0.875rem;
     text-align: center;
+    margin-top: 1.25rem;
+    min-height: 1.25em;
   }
 
   .btn {
     position: absolute;
-    top: calc(50% - 1.5rem);
+    top: 50%;
     transform: translateY(-50%);
     background: var(--bg);
     border: 1px solid var(--border);
@@ -131,7 +184,7 @@ const { images } = Astro.props;
     align-items: center;
     justify-content: center;
     transition: color 0.15s, border-color 0.15s;
-    z-index: 1;
+    z-index: 10;
     line-height: 1;
   }
 
@@ -140,14 +193,14 @@ const { images } = Astro.props;
     border-color: var(--accent-soft);
   }
 
-  .prev { left: -1.5rem; }
-  .next { right: -1.5rem; }
+  .prev { left: 0; }
+  .next { right: 0; }
 
   .dots {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
 
   .dot {
@@ -167,7 +220,7 @@ const { images } = Astro.props;
   }
 
   @media (max-width: 600px) {
-    .prev { left: 0.25rem; }
-    .next { right: 0.25rem; }
+    .stage { height: 52vh; }
+    .slide { width: 84%; left: 8%; }
   }
 </style>
