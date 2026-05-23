@@ -56,23 +56,23 @@ const isActive = (href: string) =>
         </li>
       ))}
     </ul>
+    <div class="controls">
+      <div class="pill" id="theme-pill" role="button" tabindex="0" aria-label="Toggle dark mode">
+        <span class="pill-label">☀︎</span>
+        <div class="track">
+          <span class="thumb" id="theme-thumb"></span>
+        </div>
+        <span class="pill-label">☽</span>
+      </div>
+      <div class="pill" id="lang-pill" role="button" tabindex="0" aria-label="Toggle language">
+        <span class="pill-label">en</span>
+        <div class="track">
+          <span class="thumb" id="lang-thumb"></span>
+        </div>
+        <span class="pill-label">no</span>
+      </div>
+    </div>
   </nav>
-  <div class="controls">
-    <div class="pill" id="theme-pill" role="button" tabindex="0" aria-label="Toggle dark mode">
-      <span class="pill-label">☀︎</span>
-      <div class="track">
-        <span class="thumb" id="theme-thumb"></span>
-      </div>
-      <span class="pill-label">☽</span>
-    </div>
-    <div class="pill" id="lang-pill" role="button" tabindex="0" aria-label="Toggle language">
-      <span class="pill-label">en</span>
-      <div class="track">
-        <span class="thumb" id="lang-thumb"></span>
-      </div>
-      <span class="pill-label">no</span>
-    </div>
-  </div>
 </header>
 
 <script>
@@ -215,6 +215,9 @@ const isActive = (href: string) =>
   }
 
   nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 0.75rem 0;
   }
 
@@ -251,7 +254,6 @@ const isActive = (href: string) =>
   .controls {
     display: flex;
     gap: 1rem;
-    padding-bottom: 0.75rem;
   }
 
   .pill {
