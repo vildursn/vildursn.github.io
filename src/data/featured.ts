@@ -8,11 +8,8 @@ export interface FeaturedPhoto {
 // Example:
 // { src: '/photos/phd-defence.jpg', alt: 'PhD defence at NTNU' },
 export const featuredPhotos: FeaturedPhoto[] = [
-  { src: '/images/ascend_reward.avif', alt: 'Ascend reward', caption: 'IARC 2017 with Ascend NTNU — celebrating a competition award with two lovely teammates.' },
-  { src: '/images/drone_innovasjonsdagen.jpg', alt: 'Drone at Innovasjonsdagen', caption: 'Talking drones and use cases at Innovasjonsdagen, Petroleumstilsynet.' },
-  { src: '/images/ntnu_women_in_stem_interview.png', alt: 'NTNU Women in STEM interview', caption: 'Being interviewed for a documentary about women in STEM.' },
-  { src: '/images/FLAIT.jpeg', alt: 'FLAIT', caption: 'Field work at the airport for the FLAIT project.' },
-  { src: '/images/UIS_drone_course.jpeg', alt: 'UIS drone course', caption: 'A course on using drones for research at UNIS, Svalbard.' },
-  { src: '/images/defence.jpeg', alt: 'Defence', caption: 'The big day — my PhD defence.' },
-  { src: '/images/thesis.jpeg', alt: 'Thesis', caption: 'My printed thesis, with a little gift from a friend.' },
+  { src: '/images/foredrag_BRAIN_ADA.jpeg', alt: 'Speaking at a Women in AI event', caption: 'I love making AI feel less scary. Any excuse to get on a stage.' },
+  { src: '/images/defence.jpeg', alt: 'PhD defence', caption: 'PhD defence day. Three years of asking \'but why?\' finally paid off.' },
+  { src: '/images/UIS_drone_course.jpeg', alt: 'Drone course on Svalbard', caption: 'A course on using drones for research purposes. Turns out Svalbard is a great classroom.' },
+  { src: '/images/ascend_2017_team.jpg', alt: 'Ascend NTNU 2017 team', caption: 'Two great years building autonomous drones with Ascend NTNU.' },
 ];
