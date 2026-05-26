@@ -10,12 +10,12 @@ import { featuredPhotos } from '../data/featured';
   description="AI developer — about, research, and outreach"
 >
   <section class="bio">
-    <p>
+    <p data-i18n-html="bio.p1">
       Hi, I'm Vilde — <span id="rotating-article">a</span> <span id="rotating-word">researcher</span> based in Tromsø, Norway.
       I build AI that I hope makes the world a little better, give talks to make it feel less scary,
       and make art whenever I can.
     </p>
-    <p>
+    <p data-i18n-html="bio.p2">
       I'm drawn to making things. Professionally that's meant autonomous drones with
       <a class="tip" data-tip="A student group making autonomous drones for the fun of it" href="https://www.ascendntnu.no" target="_blank" rel="noopener noreferrer">Ascend NTNU</a>,
       automatic satellite oil spill detection at
@@ -25,7 +25,7 @@ import { featuredPhotos } from '../data/featured';
       Outside of work I apply the same energy to whatever hobby I'm currently obsessed with —
       mountain running, ceramics, sewing, painting, crossfit, skiing, volleyball. The list keeps growing.
     </p>
-    <p>
+    <p data-i18n-html="bio.p3">
       My research is in <span class="tip" data-tip="Explainable AI — making sense of what models actually do">XAI</span>,
       robotics, and machine learning. I have a degree in cybernetics and robotics and a PhD in
       Explainable AI from NTNU — because "what is this model actually doing?" felt like a question
@@ -49,26 +49,40 @@ import { featuredPhotos } from '../data/featured';
 </Base>
 
 <script>
-  const word = document.getElementById('rotating-word');
-  const article = document.getElementById('rotating-article');
-  const words = [
-    { text: 'AI developer', article: 'an' },
-    { text: 'AI researcher', article: 'an' },
-    { text: 'hobby artist', article: 'a' },
-    { text: 'engineer', article: 'an' },
-  ];
+  const wl = (window as any)._wordLists as Record<string, { text: string; article: string }[]>;
+  let currentWords = wl?.[document.documentElement.lang] ?? wl?.en ?? [];
   let i = 0;
 
+  function showWord() {
+    const wordEl = document.getElementById('rotating-word');
+    const articleEl = document.getElementById('rotating-article');
+    if (wordEl) wordEl.textContent = currentWords[i].text;
+    if (articleEl) articleEl.textContent = currentWords[i].article;
+  }
+
   setInterval(() => {
-    if (!word) return;
-    word.style.opacity = '0';
+    const wordEl = document.getElementById('rotating-word');
+    if (!wordEl) return;
+    wordEl.style.opacity = '0';
     setTimeout(() => {
-      i = (i + 1) % words.length;
-      word.textContent = words[i].text;
-      if (article) article.textContent = words[i].article;
-      word.style.opacity = '1';
+      i = (i + 1) % currentWords.length;
+      showWord();
+      document.getElementById('rotating-word')?.style.setProperty('opacity', '1');
     }, 300);
   }, 2500);
+
+  document.addEventListener('langchange', (e: Event) => {
+    const lang = (e as CustomEvent<{ lang: string }>).detail.lang;
+    currentWords = wl?.[lang] ?? wl?.en ?? [];
+    i = 0;
+    const wordEl = document.getElementById('rotating-word');
+    if (!wordEl) return;
+    wordEl.style.opacity = '0';
+    setTimeout(() => {
+      showWord();
+      document.getElementById('rotating-word')?.style.setProperty('opacity', '1');
+    }, 300);
+  });
 </script>
 
 <style>
@@ -80,12 +94,12 @@ import { featuredPhotos } from '../data/featured';
     line-height: 1.75;
   }
 
-  #rotating-article {
+  :global(#rotating-article) {
     display: inline-block;
     min-width: 1.4rem;
   }
 
-  #rotating-word {
+  :global(#rotating-word) {
     display: inline-block;
     min-width: 6.5rem;
     text-align: center;
@@ -93,7 +107,7 @@ import { featuredPhotos } from '../data/featured';
     transition: opacity 0.3s ease;
   }
 
-  .tip {
+  :global(.tip) {
     position: relative;
     cursor: help;
     text-decoration: underline dotted;
@@ -101,7 +115,7 @@ import { featuredPhotos } from '../data/featured';
     text-underline-offset: 3px;
   }
 
-  .tip::after {
+  :global(.tip::after) {
     content: attr(data-tip);
     position: absolute;
     bottom: calc(100% + 6px);
@@ -121,7 +135,7 @@ import { featuredPhotos } from '../data/featured';
     z-index: 10;
   }
 
-  .tip:hover::after {
+  :global(.tip:hover::after) {
     opacity: 1;
   }
 
