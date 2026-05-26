@@ -82,7 +82,6 @@ const isActive = (href: string) =>
 
   function applyTheme(dark: boolean) {
     document.documentElement.classList.toggle('dark', dark);
-    if (themeThumb) themeThumb.style.transform = dark ? 'translateX(1rem)' : 'translateX(0)';
   }
 
   applyTheme(localStorage.getItem('theme') !== 'light');
@@ -96,14 +95,13 @@ const isActive = (href: string) =>
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); themePill.click(); }
   });
 
-  // lang (placeholder — no actual functionality yet)
+  // lang
   const langPill = document.getElementById('lang-pill');
-  const langThumb = document.getElementById('lang-thumb');
-  let langIsNo = false;
 
   langPill?.addEventListener('click', () => {
-    langIsNo = !langIsNo;
-    if (langThumb) langThumb.style.transform = langIsNo ? 'translateX(1rem)' : 'translateX(0)';
+    const isNo = document.documentElement.lang !== 'no';
+    localStorage.setItem('lang', isNo ? 'no' : 'en');
+    (window as any).applyLang(isNo ? 'no' : 'en');
   });
   langPill?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); langPill.click(); }
@@ -296,6 +294,14 @@ const isActive = (href: string) =>
     background: var(--text-muted);
     transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s;
     display: block;
+  }
+
+  :global(html.dark) #theme-thumb {
+    transform: translateX(1rem);
+  }
+
+  :global(html[data-lang="no"]) #lang-thumb {
+    transform: translateX(1rem);
   }
 
   @media (max-width: 600px) {

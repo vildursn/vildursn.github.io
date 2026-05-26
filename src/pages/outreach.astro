@@ -9,31 +9,31 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
 ---
 
 <Base title="Outreach" description="Outreach by Vilde Gjærum">
-  <h1>Outreach</h1>
+  <h1 data-i18n="outreach.title">Outreach</h1>
 
   <div class="availability">
-    <p>
-      I enjoy giving talks about AI — from broad introductions for mixed audiences
-      to more technical and academic presentations on AI and explainability (XAI).
+    <p data-i18n="outreach.cta.p1">
+      I enjoy giving talks about AI, from introductions for mixed audiences
+      to more technical presentations on explainability (XAI).
       I care about making AI understandable and accessible, whether the audience
       is young or old, technical or not.
     </p>
-    <p>
+    <p data-i18n="outreach.cta.p2">
       I tailor each talk to the audience and context, and try to bring in
       examples that are relevant and meaningful to the people in the room.
     </p>
-    <p>
+    <p data-i18n="outreach.cta.p3">
       If you'd like me to speak at your event or conference, feel free to reach out.
     </p>
     {emailLink && (
-      <a href={emailLink.url} class="contact-link">Get in touch →</a>
+      <a href={emailLink.url} class="contact-link" data-i18n="outreach.contact">Get in touch →</a>
     )}
   </div>
 
-  <h2 class="section-heading">Talks</h2>
+  <h2 class="section-heading" data-i18n="outreach.talks">Talks</h2>
 
   {sorted.length === 0 ? (
-    <p class="empty">Talks coming soon.</p>
+    <p class="empty" data-i18n="outreach.talks-empty">Talks coming soon.</p>
   ) : (
     <ul class="talk-list">
       {sorted.map(talk => (
@@ -48,10 +48,10 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
           {(talk.slides || talk.recording) && (
             <div class="links">
               {talk.slides && (
-                <a href={talk.slides} target="_blank" rel="noopener noreferrer">Slides</a>
+                <a href={talk.slides} target="_blank" rel="noopener noreferrer" data-i18n="outreach.slides">Slides</a>
               )}
               {talk.recording && (
-                <a href={talk.recording} target="_blank" rel="noopener noreferrer">Recording</a>
+                <a href={talk.recording} target="_blank" rel="noopener noreferrer" data-i18n="outreach.recording">Recording</a>
               )}
             </div>
           )}
@@ -60,7 +60,7 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
     </ul>
   )}
 
-  <h2 class="section-heading">Podcasts</h2>
+  <h2 class="section-heading" data-i18n="outreach.podcasts">Podcasts</h2>
   <ul class="talk-list">
     {podcasts.map(p => (
       <li class="talk">
