@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { talks } from '../data/talks';
+import { podcasts } from '../data/podcasts';
 import { socialLinks } from '../data/social';
 
 const sorted = [...talks].sort((a, b) => b.year - a.year);
@@ -9,17 +10,27 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
 
 <Base title="Outreach" description="Outreach by Vilde Gjærum">
   <h1>Outreach</h1>
-  <h2 class="section-heading">Talks</h2>
 
   <div class="availability">
     <p>
-      I enjoy giving talks on AI research and related topics. If you'd like me
-      to speak at your event or conference, feel free to reach out.
+      I enjoy giving talks about AI — from broad introductions for mixed audiences
+      to more technical and academic presentations on AI and explainability (XAI).
+      I care about making AI understandable and accessible, whether the audience
+      is young or old, technical or not.
+    </p>
+    <p>
+      I tailor each talk to the audience and context, and try to bring in
+      examples that are relevant and meaningful to the people in the room.
+    </p>
+    <p>
+      If you'd like me to speak at your event or conference, feel free to reach out.
     </p>
     {emailLink && (
       <a href={emailLink.url} class="contact-link">Get in touch →</a>
     )}
   </div>
+
+  <h2 class="section-heading">Talks</h2>
 
   {sorted.length === 0 ? (
     <p class="empty">Talks coming soon.</p>
@@ -30,9 +41,9 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
           {talk.photo && (
             <img class="talk-photo" src={talk.photo} alt={`Photo from ${talk.event}`} />
           )}
-          <p class="title">{talk.title}</p>
+          <p class="event">{talk.event}</p>
           <p class="meta">
-            {talk.event} · {talk.location} · {talk.month ? `${talk.month} ` : ''}{talk.year}
+            {talk.location} · {talk.month ? `${talk.month} ` : ''}{talk.year}
           </p>
           {(talk.slides || talk.recording) && (
             <div class="links">
@@ -48,6 +59,22 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
       ))}
     </ul>
   )}
+
+  <h2 class="section-heading">Podcasts</h2>
+  <ul class="talk-list">
+    {podcasts.map(p => (
+      <li class="talk">
+        <p class="event">
+          {p.link ? (
+            <a href={p.link} target="_blank" rel="noopener noreferrer">{p.show}</a>
+          ) : p.show}
+        </p>
+        <p class="meta">
+          {p.description} · {p.month ? `${p.month} ` : ''}{p.year}
+        </p>
+      </li>
+    ))}
+  </ul>
 </Base>
 
 <style>
@@ -123,7 +150,7 @@ const emailLink = socialLinks.find(l => l.url.startsWith('mailto:'));
     margin-bottom: 0.5rem;
   }
 
-  .title {
+  .event {
     font-family: var(--font-serif);
     font-size: 1.05rem;
     line-height: 1.4;
